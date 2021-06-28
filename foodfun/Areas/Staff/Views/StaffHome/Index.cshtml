@@ -1,4 +1,4 @@
-﻿@model foodfun.Models.MemberOrderViewModel
+﻿@model foodfun.Models.AdminOrderViewModel
 @using foodfun.Models;
 
 @{
@@ -49,20 +49,96 @@
 
                     @foreach (var item in Model.products)
                     {
-
                         <!-- card one -->
-                        <div class="col-xl-2 col-lg-2 col-md-4 col-6">
-                            <div class="item-box border mb-3 text-center " id=@item.product_no>
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-6 ">
+                            <div class="item-box border mb-3 text-center " data-toggle="modal" data-target="#@item.product_no">
                                 <h3 class="h5">
                                     @Html.DisplayFor(modelItem => item.product_name)
                                 </h3>
                                 <span>@Html.DisplayFor(modelItem => item.price_sale)</span>
 
+                                @*========放去冰*@
                             </div>
                         </div>
+
+                        @*=========================*@
+
+                        <div class="modal item_prod_no" id="@item.product_no" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"> @item.product_name</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="pruduct_property mb-3">
+
+
+                                            @{List<SelectListItem> lists = Shop.GetPropertyList(item.product_no);}
+
+                                            @if (lists != null)
+                                            {
+
+                                                foreach (var item1 in lists)
+                                                {
+                                                    <div class="section">
+                                                        <div class="form-check form-check-inline">
+                                                            @{
+                                                                List<string> prop_values = Shop.GetProductPropertyValue(item1.Value).Split('/').ToList();
+                                                                foreach (var value in prop_values)
+                                                                {
+                                                                    @Html.RadioButton(@item1.Value, @value, new { @class = "form-check-input" })
+                                                                    @Html.Label(item1.Value, @value, new { @class = "form-check-label" })
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+
+                                        <select class="custom-select">
+                                            @for (int i = 0; i <= item.stock_qty; i++)
+                                            {
+                                                if (item.stock_qty == 0)
+                                                {
+                                                    <option>售完</option>
+                                                }
+                                                else if (i > 0)
+                                                {
+
+                                                    <option value=@i>@i</option>
+                                                }
+
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                        @if (item.stock_qty > 0)
+                                        {
+                                            <button type="button" class="btn btn-primary item_confirm" id="item_confirm">確定</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-primary" disabled>確定</button>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     }
 
                 </div>
+
+
 
                 @*=========商品 end==========*@
 
@@ -76,35 +152,50 @@
                     @Html.AntiForgeryToken()
                     <div class="order_box">
                         <div class="row">
-                            <div class=" btn-group-toggle mx-auto order-list" data-toggle="buttons">
+                            <div class=" btn-group btn-group-toggle mx-auto order-list">
                                 @foreach (var item in Model.mealServiceList)
                                 {
-                                    <label class="btn btn-warning mx-1">
-                                        <input type="radio" name="mealService" id=@item.mealservice_no>
+                                    <label class="btn btn-warning mx-1 ">
+                                        <input type="radio" name="mealService" id=@item.mealservice_no value="@item.mealservice_no">
                                         @item.mealservice_name
                                     </label>
                                 }
                             </div>
                         </div>
-                        <div id="orderDetail">
+
+
+
+                        <div class="mb-2" id="orderDetail">
                             @Html.Partial("_PartialOrderBox")
                         </div>
+                        <div class="mb-2" id="table" style="display:none">
 
-                        <div class="creat_account">
-                            <input type="checkbox" id="f-option4" name="selector" />
-                            <label for="f-option4">I’ve read and accept the </label>
-                            <a href="#">terms & conditions*</a>
+                            @Html.EditorFor(model => model.Order.table_no, new { htmlAttributes = new { @class = "form-control", placeholder = "桌號" } })
+                            @Html.ValidationMessageFor(model => model.Order.table_no, "", new { @class = "text-danger" })
+
                         </div>
-                        <a class="btn_3" href="#">Proceed to Paypal</a>
+
+                        <div class="mb-2" id="ordertime" style="display:none">
+
+                            @Html.EditorFor(model => model.Order.SchedulOrderTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", placeholder = "預約取餐時間" } })
+                            @Html.ValidationMessageFor(model => model.Order.SchedulOrderTime, "", new { @class = "text-danger" })
+
+
+
+                        </div>
+
+                        <div id="addr" style="display:none">
+
+
+                            @Html.EditorFor(model => model.Order.receive_address, new { htmlAttributes = new { @class = "form-control", placeholder = "請輸入地址" } })
+                            @Html.ValidationMessageFor(model => model.Order.receive_address, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        @*<a class="btn_3" href="#">Proceed to Paypal</a>*@
+                        <input type="submit" value="確認付款" class="btn_3" />
                     </div>
                 }
-
-
-
-
-
-
-
 
 
             </div>
@@ -115,37 +206,70 @@
 </section>
 
 
+
+
 <script>
-    $(document).ready(function () {
-        $('.item-box').css("cursor", "pointer");
-        $('.item-box').on('click', function () {
-            var id = $(this).attr('id');
-            AddToCart(id);
-        });
-        function AddToCart(productId) {
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("OrderBox","StaffHome")',
-                data: { id: productId },
-                success: function (data) {
-                    alert('成功')
-                    $("#orderDetail").html(data);
-                },
-                error: function () {
-                    alert('失敗')
-                }
-            })
+        $(document).ready(function () {
+            $('.item-box').css("cursor", "pointer");
+            $('.item_confirm').on('click', function () {
+                var id = $(this).closest(".item_prod_no").attr("id");
+
+                //讀不到
+                //var qty = $(this).closest(".custom-select").val();
+                //alert(qty);
+
+                //讀不到
+                //var property = $(this).closest(".form-check-input:checked").val();
+                //alert(property);
+                AddToCart(id);
+                $(".modal").modal('hide');
+
+            });
+            function AddToCart(productId) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("OrderBox","StaffHome")',
+                    data: { id: productId },
+                    success: function (data) {
+                        /*alert('成功')*/
+                        $("#orderDetail").html(data);
+                    },
+                    error: function () {
+                        alert('失敗')
+                    }
+                })
+            }
+
+        })
 
 
+    $("input[type=radio][name = mealService]").change(function () {
+        console.log('aa')
+        var mealno = $(this).val();
 
+        console.log(mealno)
+
+
+        if (mealno == "A") {
+            $('#table').show()
+            $('#ordertime').hide()
+            $('#addr').hide()
+        }
+        if (mealno == "B") {
+            $('#table').hide();
+            $('#ordertime').show()
+            $('#ordertime label').text("取餐時間")
+            $('#addr').hide()
+        }
+        if (mealno == "C") {
+            $('#table').hide();
+            $('#ordertime').show()
+            $('#ordertime label').text("送達時間")
+            $('#addr').show()
 
         }
 
-
-
-
-
-    })
+        })
 
 
 </script>
