@@ -11411,9 +11411,9 @@ input:focus {
         display: inline-block;
         color: black;
         text-align: center;
-        padding: 14px;
-        text-decoration: none;
-        border-radius:30px 30px 30px 30px;}
+        /*padding: 14px;*/
+      /*  text-decoration: none;
+        border-radius:30px 30px 30px 30px;*/}
 
 
 
