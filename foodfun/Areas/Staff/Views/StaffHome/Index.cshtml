@@ -215,14 +215,23 @@
                 var id = $(this).closest(".item_prod_no").attr("id");
 
                 //讀不到
-                //var qty = $(this).closest(".custom-select").val();
-                //alert(qty);
+                var qty = $(this).parent().siblings(".modal-body").children(".custom-select").val();
+                console.log(qty);
+        
+
 
                 //讀不到
-                //var property = $(this).closest(".form-check-input:checked").val();
+                var property = $(this).parent().siblings(".modal-body").children(".pruduct_property").children().children().children(".form-check-input:checked").val();
+                console.log(property);
+
+
+                var property1 = $(this).parent().siblings(".modal-body").find(".form-check-input:checked").val();
+                console.log(property1);
+
+                //$(this).closest(".form-check-input:checked").val();
                 //alert(property);
-                AddToCart(id);
-                $(".modal").modal('hide');
+                //AddToCart(id);
+                //$(".modal").modal('hide');
 
             });
             function AddToCart(productId) {
