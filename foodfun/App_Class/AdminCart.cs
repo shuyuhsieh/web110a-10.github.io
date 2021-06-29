@@ -50,11 +50,11 @@ public class AdminCart
 
 
     //新增一筆Product，使用ProductId
-    public void AddCart(string productNo)
+    public void AddCart(string productNo, int qty, string prop_select)
     {
         var findItem = this.cartItems
                         .Where(m => m.product_no == productNo)
-                        .Where(m => m.Property_select == "")
+                        .Where(m => m.Property_select == prop_select)
                         .FirstOrDefault();
 
         //判斷相同Id的CartItem是否已經存在購物車內
@@ -65,15 +65,15 @@ public class AdminCart
             var cartItem = new Carts()
             {
                 product_no = productNo,
-                Property_select = "",
-                qty = 1,
-                each_item_amount = 1* int_price
+                Property_select = prop_select,
+                qty = qty,
+                each_item_amount = qty* int_price
             };
             this.cartItems.Add(cartItem);
         }
         else
         {
-            findItem.qty += 1;
+            findItem.qty += qty;
             findItem.each_item_amount = findItem.qty * int_price;
         }
 

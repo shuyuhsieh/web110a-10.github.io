@@ -57,7 +57,6 @@
                                 </h3>
                                 <span>@Html.DisplayFor(modelItem => item.price_sale)</span>
 
-                                @*========放去冰*@
                             </div>
                         </div>
 
@@ -85,6 +84,7 @@
                                                 foreach (var item1 in lists)
                                                 {
                                                     <div class="section">
+                                                        <span class="col-form-label">@item1.Text   </span>
                                                         <div class="form-check form-check-inline">
                                                             @{
                                                                 List<string> prop_values = Shop.GetProductPropertyValue(item1.Value).Split('/').ToList();
@@ -213,32 +213,31 @@
             $('.item-box').css("cursor", "pointer");
             $('.item_confirm').on('click', function () {
                 var id = $(this).closest(".item_prod_no").attr("id");
-
-                //讀不到
-                var qty = $(this).parent().siblings(".modal-body").children(".custom-select").val();
+                var qty = parseInt($(this).parent().siblings(".modal-body").children(".custom-select").val());
                 console.log(qty);
-        
+
+                var str_product_spec="";
+                //var property1 = $(this).parent().siblings(".modal-body").find(".form-check-input:checked").val();
+                var property1 = $(this).parent().siblings(".modal-body").find(".form-check-input:checked");
+
+                $.each(property1, function () {
+                    var label = $(this).closest(".section").children(".col-form-label").html();
+                    console.log($(this).val());
+                    str_product_spec += label+' : '+ $(this).val() + " ";
+                    console.log(str_product_spec)
+                })
 
 
-                //讀不到
-                var property = $(this).parent().siblings(".modal-body").children(".pruduct_property").children().children().children(".form-check-input:checked").val();
-                console.log(property);
-
-
-                var property1 = $(this).parent().siblings(".modal-body").find(".form-check-input:checked").val();
-                console.log(property1);
-
-                //$(this).closest(".form-check-input:checked").val();
-                //alert(property);
-                //AddToCart(id);
-                //$(".modal").modal('hide');
+                AddToCart(id, qty, str_product_spec);
+                $(".modal").modal('hide');
 
             });
-            function AddToCart(productId) {
+
+            function AddToCart(productId, qty, select) {
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("OrderBox","StaffHome")',
-                    data: { id: productId },
+                    data: { id: productId,qty:qty,prop_select:select},
                     success: function (data) {
                         /*alert('成功')*/
                         $("#orderDetail").html(data);

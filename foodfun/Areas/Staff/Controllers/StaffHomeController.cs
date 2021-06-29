@@ -55,18 +55,18 @@ namespace foodfun.Areas.Staff.Controllers
 
 
 
-        public JsonResult AddToCart(string id)
-        {
-            var currentCart = CartTemp.GetCurrentCart();
-            currentCart.AddCart(id);
-            return Json(currentCart, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult AddToCart(string id)
+        //{
+        //    var currentCart = CartTemp.GetCurrentCart();
+        //    currentCart.AddCart(id);
+        //    return Json(currentCart, JsonRequestBehavior.AllowGet);
+        //}
 
  
-        public ActionResult OrderBox(string id) 
+        public ActionResult OrderBox(string id,int qty,string prop_select) 
         {
             var currentCart = CartTemp.GetCurrentCart();
-            currentCart.AddCart(id);
+            currentCart.AddCart(id,qty,prop_select);
 
             return PartialView("_PartialOrderBox");
 
