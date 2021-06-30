@@ -108,10 +108,7 @@
                                                     <option>售完</option>
                                                 }
                                                 else if (i > 0)
-                                                {
-
-                                                    <option value=@i>@i</option>
-                                                }
+                                                {<option value=@i>@i</option>}
 
                                             }
                                         </select>
@@ -154,8 +151,6 @@
                                 }
                             </div>
                         </div>
-
-
 
                         <div class="mb-2" id="orderDetail">
                             @Html.Partial("_PartialOrderBox")

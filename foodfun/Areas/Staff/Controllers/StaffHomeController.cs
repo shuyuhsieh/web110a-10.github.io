@@ -46,21 +46,35 @@ namespace foodfun.Areas.Staff.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection collection) 
+        public ActionResult Index(FormCollection collection)
         {
+
+            //if (!ModelState.IsValid)
+            //{
+            //    AdminOrderViewModel model = new AdminOrderViewModel()
+            //    {
+            //        Order = new Orders(),
+            //        mealServiceList = db.MealService.OrderBy(m => m.mealservice_no).ToList(),
+            //        PaymentsList = db.Payments.OrderBy(m => m.paid_no).ToList(),
+
+            //    };
+
+            //}
+
+            TempData["mealservice_no"] = collection["mealService"];
+            if (collection["mealservice_no"] == "A")
+            {
+                TempData["Table_no"] = collection["Order.table_no"];
+            }
+            else if (collection["mealservice_no"] == "C")
+            {
+                TempData["receive_address"] = collection["Order.receive_address"];
+            }
+
+            TempData["SchedulOrderTime"] = collection["Order.SchedulOrderTime"];
             return View();
         
         }
-
-
-
-
-        //public JsonResult AddToCart(string id)
-        //{
-        //    var currentCart = CartTemp.GetCurrentCart();
-        //    currentCart.AddCart(id);
-        //    return Json(currentCart, JsonRequestBehavior.AllowGet);
-        //}
 
  
         public ActionResult OrderBox(string id,int qty,string prop_select) 
@@ -69,6 +83,54 @@ namespace foodfun.Areas.Staff.Controllers
             currentCart.AddCart(id,qty,prop_select);
 
             return PartialView("_PartialOrderBox");
+
+        }
+
+
+        public ActionResult Confirmation()
+        {
+
+            ConfirmationViewModel orderInfoView = new ConfirmationViewModel()
+            {
+                Order = new Orders(),
+                PaymentsList = db.Payments.OrderBy(m => m.paid_no).ToList()
+            };
+
+            orderInfoView.Order.total = Cart.Totals;
+            Users userinfo = new Users();
+
+            userinfo = db.Users.Where(m => m.account_name == UserAccount.UserNo).FirstOrDefault();
+
+            if (UserAccount.IsLogin)
+            {
+                orderInfoView.Cart = db.Carts.Where(m => m.mno == UserAccount.UserNo).ToList();
+                orderInfoView.Order.mno = UserAccount.UserNo;
+                orderInfoView.Order.receive_name = userinfo.mname;
+                orderInfoView.Order.receive_phone = userinfo.phone;
+            }
+            else
+            {
+                orderInfoView.Cart = db.Carts.Where(m => m.cart_lotno == Cart.LotNo).ToList();
+            }
+            orderInfoView.Order.mealservice_no = TempData["mealservice_no"].ToString();
+            orderInfoView.Order.SchedulOrderTime = Convert.ToDateTime(TempData["SchedulOrderTime"]);
+            string mealservice_no = orderInfoView.Order.mealservice_no;
+
+            if (mealservice_no == "A")
+            {
+                orderInfoView.Order.table_no = TempData["Table_no"].ToString();
+
+            }
+            else if (mealservice_no == "C")
+            {
+                orderInfoView.Order.receive_address = TempData["receive_address"].ToString();
+            }
+
+            var mealservice = db.MealService.Where(m => m.mealservice_no == mealservice_no).FirstOrDefault();
+            orderInfoView.mealservice_name = mealservice.mealservice_name;
+
+
+            return View(orderInfoView);
 
         }
 
