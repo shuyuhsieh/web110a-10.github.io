@@ -127,9 +127,9 @@ namespace foodfun.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ActionName("Delete")]
+        //[ActionName("Delete")]
         [LoginAuthorize(RoleList = "Admin")]
-        public ActionResult DeleteData(int id)
+        public JsonResult DeleteData(int id)
         {
             bool status = false;
             using (GoPASTAEntities db = new GoPASTAEntities())
@@ -142,7 +142,8 @@ namespace foodfun.Areas.Admin.Controllers
                     status = true;
                 }
             }
-            return new JsonResult { Data = new { status = status } };
+            return Json(status, JsonRequestBehavior.AllowGet);
+            //return new JsonResult { Data = new { status = status } };
         }
 
         public ActionResult ReturnToParent()

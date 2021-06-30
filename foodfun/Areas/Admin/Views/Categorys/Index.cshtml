@@ -1,6 +1,6 @@
 ﻿@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>*@
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>*@
 
 <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jquery.dataTables.css")" />
 <script type="text/javascript" src="@Url.Content("~/Scripts/script/jquery-3.3.1.js")"></script>
@@ -41,8 +41,8 @@
                     }
                 </b>
                 @Html.ActionLink("回上一層", "ReturnToParent", "Categorys", new { Area = "Admin" }, new { @class = "btn btn-primary form-button" })
-               
-               
+
+
             </h3>
         </div>
         <hr />
@@ -52,8 +52,6 @@
             <tr>
                 <th>
                     <a class="popup" title="新增記錄" href="/Admin/Categorys/Create/"><i class="fa fa-plus-square-o fa-2x"></i></a>
-                    
-                    @Html.ActionLink("刪除", "DeleteData", "Categorys", new { id = int_pid }, new { @class = "btn btn-success", onclick = "return confirm('是否確定要刪除?')" })
                 </th>
                 <th>編號</th>
                 <th>名稱</th>
@@ -65,7 +63,7 @@
 @*<script src="@Url.Content("~/Scripts/apps/admin/category_index.js")"></script>*@
 <script>
     $(document).ready(function () {
-        $('#DatatableList').DataTable({
+        var oTable = $('#DatatableList').DataTable({
             ajax: {
                 url: '/Admin/Categorys/GetDataList',
                 type: "get",
@@ -91,7 +89,7 @@
             "columns": [
                 {
                     "data": "rowid", "width": "40px", "orderable": false, "render": function (data) {
-                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a class="popup" title="刪除記錄" href="/Admin/Categorys/DeleteData/' + data + 'onclick = "return confirm("是否確定要刪除 ?")"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
+                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a id ="' + data + ' " class="delete_cate" title="刪除記錄" href="#"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
                     }
                 },
                 { "data": "category_no", "width": "30px" },
@@ -104,8 +102,23 @@
         //    OpenPopup($(this).attr('href'));
         //})
 
-        $(document).on('click', 'popup', function () {
-            alert('clicked!');
+        $(document).on('click', '.delete_cate', function () {
+            alert('是否確定要刪除!');
+            var id = parseInt($(this).attr("id"));
+            $.ajax({
+                type: "post",
+                url: "/Categorys/DeleteData/" + id,
+
+                success: function (status) {
+
+                    if (status) {
+                        oTable.ajax.reload();
+
+                    }
+                }
+
+            })
+
         });
 
 
