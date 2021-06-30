@@ -1,10 +1,4 @@
-﻿@*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>*@
-
-<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jquery.dataTables.css")" />
-<script type="text/javascript" src="@Url.Content("~/Scripts/script/jquery-3.3.1.js")"></script>
-<script type="text/javascript" charset="utf8" src="@Url.Content("~/Scripts/script/jquery.dataTables.js")"></script>
+﻿
 
 @{
     ViewBag.Title = "基本資料管理 / 商品分類設定";
@@ -15,52 +9,77 @@
     string str_space = "＞";
 }
 
-<div style="width:100%; margin:0 auto" class="tablecontainer">
-    @if (int_pid > 0)
-    {
-        <div>
-            <h3>
-                <b>
-                    上層類別：
-                    @if (!string.IsNullOrEmpty(str_pids))
-                    {
-                        List<string> ids = str_pids.Split(',').ToList();
-                        List<string> names = str_pnames.Split(',').ToList();
-                        for (int i = 0; i < ids.Count; i++)
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        @if (int_pid > 0)
                         {
-                            if (i == (ids.Count - 1))
-                            {
-                                <a href="#" class="btn btn-success" style="font-size:large;font-weight:bold;">@names[i] </a>
-                            }
-                            else
-                            {
-                                <a href="/Admin/Category/Index/@ids[i]" class="btn btn-primary" style="font-size:large;font-weight:bold;">@names[i] </a>
-                                <span style="font-size:large;font-weight:bold;">@str_space</span>
-                            }
+                            <div>
+                                <h3>
+                                    <b>
+                                        <strong class="card-title">
+                                            上層類別：
+                                        </strong>
+                                        @if (!string.IsNullOrEmpty(str_pids))
+                                        {
+                                            List<string> ids = str_pids.Split(',').ToList();
+                                            List<string> names = str_pnames.Split(',').ToList();
+                                            for (int i = 0; i < ids.Count; i++)
+                                            {
+                                                if (i == (ids.Count - 1))
+                                                {
+                                                    <a href="#" class="btn btn-success" style="font-size:large;font-weight:bold;">@names[i] </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="/Admin/Category/Index/@ids[i]" class="btn btn-primary" style="font-size:large;font-weight:bold;">@names[i] </a>
+                                                    <span style="font-size:large;font-weight:bold;">@str_space</span>
+                                                }
+                                            }
+                                        }
+                                    </b>
+                                    @Html.ActionLink("回上一層", "ReturnToParent", "Categorys", new { Area = "Admin" }, new { @class = "btn btn-primary form-button" })
+
+
+                                </h3>
+                            </div>
+                            <hr />
                         }
-                    }
-                </b>
-                @Html.ActionLink("回上一層", "ReturnToParent", "Categorys", new { Area = "Admin" }, new { @class = "btn btn-primary form-button" })
 
 
-            </h3>
+                    </div>
+                    <div class="card-body">
+                        <table style=" width: 100%" id="DatatableList" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <a class="popup" title="新增記錄" href="/Admin/Categorys/Create/"><i class="fa fa-plus-square-o fa-2x"></i></a>
+                                    </th>
+                                    <th>編號</th>
+                                    <th>名稱</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-        <hr />
-    }
-    <table id="DatatableList" class="table table-bordered  display dt-responsive nowrap">
-        <thead>
-            <tr>
-                <th>
-                    <a class="popup" title="新增記錄" href="/Admin/Categorys/Create/"><i class="fa fa-plus-square-o fa-2x"></i></a>
-                </th>
-                <th>編號</th>
-                <th>名稱</th>
-            </tr>
-        </thead>
-    </table>
+    </div>
 </div>
 
-@*<script src="@Url.Content("~/Scripts/apps/admin/category_index.js")"></script>*@
+
+
+
 <script>
     $(document).ready(function () {
         var oTable = $('#DatatableList').DataTable({
@@ -88,19 +107,17 @@
             },
             "columns": [
                 {
-                    "data": "rowid", "width": "40px", "orderable": false, "render": function (data) {
-                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a id ="' + data + ' " class="delete_cate" title="刪除記錄" href="#"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
+                    "data": "rowid", className: "text-center", "width":"30%"  ,"orderable": false, "render": function (data) {
+                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a class=mx-2 id ="' + data + ' " class="delete_cate" title="刪除記錄" href="#"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
                     }
                 },
-                { "data": "category_no", "width": "30px" },
-                { "data": "category_name", "autoWidth": true }
-            ]
+                { "data": "category_no", },
+                { "data": "category_name" }
+            ],
+
+
         })
 
-        //$('.tablecontainer').on('click', 'a.popup', function (e) {
-        //    e.preventDefault();
-        //    OpenPopup($(this).attr('href'));
-        //})
 
         $(document).on('click', '.delete_cate', function () {
             alert('是否確定要刪除!');
