@@ -118,7 +118,6 @@ namespace foodfun.Areas.Admin.Controllers
 
                 ImageService.ReturnAction("", "ProductBack", "Index");               
                 ImageService.ImageTitle = string.Format("{0}  圖片上傳", model.product_name);
-                //ImageService.ImageTitle = string.Format("圖片上傳");
                 ImageService.ImageFolder = "~/img/product";
                 ImageService.ImageSubFolder = model.category_no;
                 ImageService.ImageName = model.product_no;
