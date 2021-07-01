@@ -117,8 +117,8 @@ namespace foodfun.Areas.Admin.Controllers
                 var model = db.Products.Where(m => m.product_no == product_no).FirstOrDefault();
 
                 ImageService.ReturnAction("", "ProductBack", "Index");               
-                ImageService.ImageTitle = string.Format("{0} {1} 圖片上傳", model.product_no, model.product_name);
-                ImageService.ImageTitle = string.Format("圖片上傳");
+                ImageService.ImageTitle = string.Format("{0}  圖片上傳", model.product_name);
+                //ImageService.ImageTitle = string.Format("圖片上傳");
                 ImageService.ImageFolder = "~/img/product";
                 ImageService.ImageSubFolder = model.category_no;
                 ImageService.ImageName = model.product_no;

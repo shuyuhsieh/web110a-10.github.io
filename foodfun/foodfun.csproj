@@ -496,6 +496,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\FileUpload.css" />
     <Content Include="Content\images\sort_asc.png" />
     <Content Include="Content\images\sort_both.png" />
     <Content Include="Content\images\sort_desc.png" />
@@ -631,6 +632,7 @@
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Scripts\DateTimePicker-i18n-zh-TW.js" />
     <Content Include="Scripts\DateTimePicker.js" />
+    <Content Include="Scripts\FileUpload.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
