@@ -9,7 +9,6 @@
     string str_space = "＞";
 }
 
-
 <div class="content">
     <div class="animated fadeIn">
         <div class="row">
@@ -107,8 +106,8 @@
             },
             "columns": [
                 {
-                    "data": "rowid", className: "text-center", "width":"30%"  ,"orderable": false, "render": function (data) {
-                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a class=mx-2 id ="' + data + ' " class="delete_cate" title="刪除記錄" href="#"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
+                    "data": "rowid", className: "text-center", "width": "30%", "orderable": false, "render": function (data) {
+                        return '<a   title="修改記錄" href="/Admin/Categorys/Edit/' + data + '"><i class="fa fa-pencil-square-o fa-2x"></i></a><a id ="' + data + ' " class="delete_cate mx-3" title="刪除記錄" href="#"><i class="fa fa-trash fa-2x"></i></a><a title="子分類明細" href="/Admin/Categorys/Index/' + data + '"><i class="fa fa-list fa-2x"></i></a>';
                     }
                 },
                 { "data": "category_no", },
@@ -120,21 +119,16 @@
 
 
         $(document).on('click', '.delete_cate', function () {
-            alert('是否確定要刪除!');
             var id = parseInt($(this).attr("id"));
-            $.ajax({
-                type: "post",
-                url: "/Categorys/DeleteData/" + id,
-
-                success: function (status) {
-
-                    if (status) {
-                        oTable.ajax.reload();
-
-                    }
-                }
-
-            })
+            if (confirm('是否確定要刪除!')) {
+                $.ajax({
+                    type: "post",
+                    url: "/Categorys/DeleteData/" + id,
+                    success: function (status) { if (status) { oTable.ajax.reload(); } }
+                })
+            }
+     
+            
 
         });
 
