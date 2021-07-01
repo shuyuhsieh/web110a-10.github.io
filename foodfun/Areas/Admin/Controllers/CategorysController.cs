@@ -39,7 +39,7 @@ namespace foodfun.Areas.Admin.Controllers
             {
                 db.Categorys.Add(model);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new {id=model.parentid });
             }
         }
 
@@ -77,7 +77,7 @@ namespace foodfun.Areas.Admin.Controllers
         [LoginAuthorize(RoleList = "Admin")]
         public ActionResult Edit(Categorys models)
         {
-            bool status = false;
+           
             if (ModelState.IsValid)
             {
                 using (GoPASTAEntities db = new GoPASTAEntities())
@@ -102,10 +102,10 @@ namespace foodfun.Areas.Admin.Controllers
                         db.Categorys.Add(models);
                     }
                     db.SaveChanges();
-                    status = true;
+                    
                 }
             }
-            return new JsonResult { Data = new { status = status } };
+            return RedirectToAction("Index", new { id = models.parentid });
         }
 
         [HttpGet]
