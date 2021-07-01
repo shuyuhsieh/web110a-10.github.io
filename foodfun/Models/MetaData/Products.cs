@@ -38,6 +38,7 @@ namespace foodfun.Models
 
 
             [Display(Name ="平均成本")]
+            [DisplayFormat(DataFormatString = "{0:C0}")]
             public Nullable<int> price_avgcost { get; set; }
 
             [Display(Name ="售價")]

@@ -601,7 +601,6 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\ProductBack\Create.cshtml" />
     <Content Include="Areas\Admin\Views\ProductBack\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ProductBack\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <EntityDeploy Include="Models\GoPASTA.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -626,6 +625,7 @@
     <Content Include="Content\DataTables\css\common.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\semanticui.scss" />
+    <Content Include="Areas\Admin\Views\ProductBack\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />

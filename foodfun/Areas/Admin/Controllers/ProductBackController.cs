@@ -12,14 +12,14 @@ namespace foodfun.Areas.Admin.Controllers
 {
     public class ProductBackController : Controller
     {
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        public ActionResult Index()
         {
             // return View(repo_product.ReadAll().OrderBy(m => m.mno));
 
             using (GoPASTAEntities db = new GoPASTAEntities())
             {
-                return View(db.Products.OrderBy(m => m.product_no).ToPagedList(page, pageSize));
-
+                var model = db.Products.OrderBy(m => m.product_no).ToList();
+                return View(model);
             }
         }
 
