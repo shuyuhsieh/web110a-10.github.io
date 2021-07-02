@@ -14,7 +14,7 @@ using foodfun.Models;
     #region 公開屬性
 
     /// <summary>
-    /// 又否有未結訂單
+    /// 是否有未結訂單
     /// </summary>
     public static bool IsNowOrder { get { return GetNowOrder(); } }
 

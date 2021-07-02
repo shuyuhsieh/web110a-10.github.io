@@ -116,10 +116,12 @@ namespace foodfun.Controllers
                 return View(model);
             }
 
-            Cart.AddNewOrder(model);
+            Cart.AddNewOrder(model,true);
             string a = Cart.GetOrderNO();
 
 
+
+      
             Cart.AddNewOrderDetail();
 
 

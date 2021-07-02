@@ -34,9 +34,11 @@ namespace foodfun.Models
 
             [Display(Name = "訂單狀態編碼")]
 
-            public string orderstatus_no { get; set; }
-            [Display(Name = "用餐方式編碼")]
 
+            public string orderstatus_no { get; set; }
+
+            [Required]
+            [Display(Name = "用餐方式編碼")]
             public string mealservice_no { get; set; }
 
             [Display(Name = "預約取餐時間")]

@@ -302,10 +302,10 @@ public static class Cart
         {
             if (UserAccount.IsLogin)
             {
-                    var data1 = db.Carts
-                        .Where(m => m.mno == UserAccount.UserNo)
-                        .ToList();
-                    if (data1 != null) int_totals = data1.Sum(m => m.each_item_amount);
+                var data1 = db.Carts
+                    .Where(m => m.mno == UserAccount.UserNo)
+                    .ToList();
+                if (data1 != null) int_totals = data1.Sum(m => m.each_item_amount);
             }
             else
             {
@@ -324,7 +324,7 @@ public static class Cart
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public static void AddNewOrder(ConfirmationViewModel model)
+    public static void AddNewOrder(ConfirmationViewModel model, bool paided)
     {
         Shop.OrderID = 0;
 
@@ -335,9 +335,9 @@ public static class Cart
             Orders orders = new Orders();
 
             orders.isclosed = false;
-            orders.ispaided = false;
+            orders.ispaided = paided;
             orders.order_date = DateTime.Now;
-            orders.mno = UserAccount.UserNo;
+            orders.mno = model.Order.mno;
             orders.orderstatus_no = "TBC";
             orders.total = model.Order.total;
             orders.mealservice_no = model.Order.mealservice_no;
@@ -361,8 +361,54 @@ public static class Cart
             {
                 Shop.OrderID = neword.rowid;
             }
+        }
+    }
 
 
+    /// <summary>
+    /// 新增New Order
+    /// 店員用 
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public static void AddNewOrder(ConfirmationViewModel model, bool paided, string status)
+    {
+        Shop.OrderID = 0;
+
+        string str_guid = Guid.NewGuid().ToString().Substring(0, 25);
+
+        using (GoPASTAEntities db = new GoPASTAEntities())
+        {
+            Orders orders = new Orders();
+
+            orders.isclosed = false;
+            orders.ispaided = paided;
+            orders.order_date = DateTime.Now;
+            orders.mno = model.Order.mno;
+            orders.orderstatus_no = status;
+
+            orders.total = model.Order.total;
+            orders.mealservice_no = model.Order.mealservice_no;
+            orders.SchedulOrderTime = model.Order.SchedulOrderTime;
+            orders.table_no = model.Order.table_no;
+            orders.paid_no = model.Order.paid_no;
+            orders.receive_name = model.Order.receive_name;
+            orders.receive_phone = model.Order.receive_phone;
+            orders.receive_address = model.Order.receive_address;
+            orders.cancelorder = false;
+            orders.cancelreason = "";
+            orders.order_guid = str_guid;
+            orders.remark = "";
+
+
+            db.Orders.Add(orders);
+            db.SaveChanges();
+
+            var neword = db.Orders.Where(m => m.order_guid == str_guid).FirstOrDefault();
+            if (neword != null)
+            {
+                Shop.OrderID = neword.rowid;
+            }
         }
     }
     public static string GetOrderNO()
@@ -382,10 +428,10 @@ public static class Cart
 
     public static void AddNewOrderDetail()
     {
+        List<Carts> datas;
+
         using (GoPASTAEntities db = new GoPASTAEntities())
         {
-
-            List<Carts> datas;
             if (UserAccount.IsLogin)
             { datas = db.Carts.Where(m => m.mno == UserAccount.UserNo).ToList(); }
             else
@@ -410,6 +456,37 @@ public static class Cart
                 }
                 db.Carts.RemoveRange(datas);
                 db.SaveChanges();
+            }
+
+
+        }
+    }
+
+    public static void StaffNewOrderDetail()
+    {
+
+        using (GoPASTAEntities db = new GoPASTAEntities())
+        {
+            var datas = CartTemp.GetCurrentCart().cartItems;
+
+            if (datas != null)
+            {
+                foreach (var item in datas)
+                {
+                    OrdersDetails ordersDetail = new OrdersDetails()
+                    {
+                        order_no = Shop.OrderNo,
+                        product_no = item.product_no,
+                        Property_select = item.Property_select,
+                        each_item_amount = item.each_item_amount,
+                        qty = item.qty,
+                        remark = "",
+                    };
+                    db.OrdersDetails.Add(ordersDetail);
+                    db.SaveChanges();
+                   
+                }
+                System.Web.HttpContext.Current.Session["Cart"] = null;
             }
 
 

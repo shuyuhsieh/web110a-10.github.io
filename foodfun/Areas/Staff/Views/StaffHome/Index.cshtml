@@ -108,7 +108,9 @@
                                                     <option>售完</option>
                                                 }
                                                 else if (i > 0)
-                                                {<option value=@i>@i</option>}
+                                                {
+                                                    <option value=@i>@i</option>
+                                                }
 
                                             }
                                         </select>
@@ -136,9 +138,8 @@
             @*=========訂單==========*@
             <div class="col-md-4">
 
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
+                <form id="CreateOrderForm">
+
                     <div class="order_box">
                         <div class="row">
                             <div class=" btn-group btn-group-toggle mx-auto order-list">
@@ -180,9 +181,9 @@
                         </div>
 
                         @*<a class="btn_3" href="#">Proceed to Paypal</a>*@
-                        <input type="submit" value="確認付款" class="btn btn-danger btn-block" />
+                        <input id="CreateNewOrder" type="button" value="確認" class="btn btn-danger btn-block" />
                     </div>
-                }
+                </form>
 
 
             </div>
@@ -255,7 +256,7 @@
             $('#ordertime').show()
             $('#ordertime label').text("取餐時間")
             $('#addr').hide()
-        }
+        } CreateOrderForm
         if (mealno == "C") {
             $('#table').hide();
             $('#ordertime').show()
@@ -263,6 +264,75 @@
             $('#addr').show()
 
         }
+
+    })
+
+    $("#CreateNewOrder").click(function () {
+        var data = $("#CreateOrderForm").serialize();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("AddOrderInfi", "StaffHome")',
+            data: data,
+            success: function (result) {
+                var content = result == 0 ? '請選擇寫用餐方式!' : (result == 1 ? '請填寫桌號!' : (result == 2 ? '請填寫取餐時間!' : '請填寫外送資訊'));
+
+                if (result!=4) {
+                    $.alert({
+                        title: '錯誤!',
+                        content: content,
+                        type: 'red',
+
+                    });
+                } else {
+                    $.confirm({
+                        title: '下一步!',
+                        content: '是否結帳!',
+                        type: 'orange',
+                        theme: 'modern',
+                        buttons: {
+                            稍後結帳: function () {
+                                $.ajax({
+                                    type: "post",
+                                    url: '@Url.Action("CheckoutLater", "StaffHome")',
+                                }).done(function (result) {
+                                    if (result != false) {
+                                        $.alert({
+                                            icon: 'fa fa-check',
+                                            title: '訂單成立!',
+                                            content: '訂單:' + result + '點餐完成!',
+                                            type: 'orange',
+                                            theme: 'modern',
+
+                                            buttons: {
+                                                ok: function () {
+                                                    location.href = '@Url.Action("Index", "StaffHome")';
+                                                }
+                                            }
+                                            //action: function() { location.href ='@Url.Action("ee", "StaffHome")' }
+                                        });
+                                    } else {
+                                        $.alert({
+                                            icon: 'fa fa-exclamation',
+                                            title: '錯誤!',
+                                            content: '購物車是空的!',
+                                            type: 'red',
+                                            theme: 'modern'
+                                        });
+
+                                    }
+                                })
+                            },
+
+                            前往結帳: {
+                                btnClass: 'btn-warning',
+                                action: function () { location.href ='@Url.Action("Chectout", "StaffHome")'}
+                            },
+                        }
+                    });
+                }
+            }
+        })
 
     })
 

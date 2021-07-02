@@ -337,6 +337,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery-confirm.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -456,8 +457,10 @@
     <Content Include="Areas\Admin\Views\Propertys\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Propertys\Index.cshtml" />
     <Content Include="Areas\Staff\Views\web.config" />
-    <Content Include="Areas\Staff\Views\StaffHome\Index.cshtml" />
     <Content Include="Areas\Staff\Views\StaffHome\_PartialOrderBox.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffHome\Index.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffHome\CheckoutNow.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffHome\Chectout.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />
@@ -468,6 +471,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-confirm.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.twzipcode.min.js" />
@@ -874,7 +878,6 @@
     <Folder Include="Areas\Admin\Views\AdminHome\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
-    <Folder Include="Views\AdminCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
