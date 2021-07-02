@@ -12,15 +12,24 @@ namespace foodfun.Areas.Admin.Controllers
 {
     public class ProductBackController : Controller
     {
+        GoPASTAEntities db = new GoPASTAEntities();
         public ActionResult Index()
         {
             // return View(repo_product.ReadAll().OrderBy(m => m.mno));
 
-            using (GoPASTAEntities db = new GoPASTAEntities())
+          var product=db.Products.OrderBy(m => m.product_no).ToList();
+
+            var model = new List<ProductBackViewModel>();
+
+            for (int i = 0; i < product.Count; i++)
             {
-                var model = db.Products.OrderBy(m => m.product_no).ToList();
-                return View(model);
+                model.Add(new ProductBackViewModel()
+                {
+                    products=product[i],
+                    category_name = Backend.GetCodeName(product[i].category_no)
+                });
             }
+                return View(model);
         }
 
         [HttpGet]

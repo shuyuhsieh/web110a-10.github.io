@@ -247,6 +247,7 @@
     <Compile Include="Models\ViewModel\ConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModel\MemberOrderViewModel.cs" />
     <Compile Include="Models\ViewModel\OrdersViewModel.cs" />
+    <Compile Include="Models\ViewModel\ProductBackViewModel.cs" />
     <Compile Include="Models\ViewModel\ResetPasswordViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
