@@ -197,7 +197,9 @@
 
 
 <script>
-        $(document).ready(function () {
+
+    //將點餐資訊存到[session]並更新頁面
+    $(document).ready(function () {
             $('.item-box').css("cursor", "pointer");
             $('.item_confirm').on('click', function () {
                 var id = $(this).closest(".item_prod_no").attr("id");
@@ -238,7 +240,7 @@
 
         })
 
-
+    //選擇用餐方式並動態顯示欄位
     $("input[type=radio][name = mealService]").change(function () {
         console.log('aa')
         var mealno = $(this).val();
@@ -267,6 +269,7 @@
 
     })
 
+    //提交點餐資訊,選擇先結後結
     $("#CreateNewOrder").click(function () {
         var data = $("#CreateOrderForm").serialize();
         console.log(data);
@@ -309,7 +312,6 @@
                                                     location.href = '@Url.Action("Index", "StaffHome")';
                                                 }
                                             }
-                                            //action: function() { location.href ='@Url.Action("ee", "StaffHome")' }
                                         });
                                     } else {
                                         $.alert({
@@ -326,7 +328,7 @@
 
                             前往結帳: {
                                 btnClass: 'btn-warning',
-                                action: function () { location.href ='@Url.Action("Chectout", "StaffHome")'}
+                                action: function () { location.href ='@Url.Action("Checkout", "StaffHome")'}
                             },
                         }
                     });

@@ -47,6 +47,8 @@ namespace foodfun.Areas.Staff.Controllers
 
 
 
+
+
         [LoginAuthorize(RoleList = "Admin,Staff")]
         [HttpPost]
         //public JsonResult SelectCheckout(FormCollection collection)
@@ -54,7 +56,6 @@ namespace foodfun.Areas.Staff.Controllers
         {
             int result = 0;
             if (collection["mealService"] == null) { return Json(result, JsonRequestBehavior.AllowGet); }
-            //TempData["mealservice_no"] = collection["mealService"];
 
             if (collection["mealService"] == "A")
             {
@@ -63,7 +64,6 @@ namespace foodfun.Areas.Staff.Controllers
                     result = 1;
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
-                //TempData["Table_no"] = collection["Order.table_no"];
 
             }
             if (collection["mealService"] == "B")
@@ -81,14 +81,8 @@ namespace foodfun.Areas.Staff.Controllers
                     result = 3;
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
-                //TempData["receive_address"] = collection["Order.receive_address"];
+
             }
-
-            //TempData["SchedulOrderTime"] = collection["Order.SchedulOrderTime"];
-
-
-
-            //=================================================
 
             ConfirmationViewModel orderInfoView = new ConfirmationViewModel()
             {
@@ -98,7 +92,7 @@ namespace foodfun.Areas.Staff.Controllers
             orderInfoView.Order.total = CartTemp.GetCurrentCart().TotalAmount;
             orderInfoView.Cart = CartTemp.GetCurrentCart().cartItems;
 
-            //TEST
+
             orderInfoView.Order.mealservice_no = collection["mealService"];
             //orderInfoView.Order.mealservice_no = "A";
             string mealservice_no = orderInfoView.Order.mealservice_no;
@@ -145,7 +139,7 @@ namespace foodfun.Areas.Staff.Controllers
         {
             bool result = false;
             ConfirmationViewModel model = (ConfirmationViewModel)TempData["CheckoutInfo"];
-            if (model.Cart.Count() !=0)
+            if (model.Cart.Count() != 0)
             {
                 try
                 {
@@ -163,30 +157,51 @@ namespace foodfun.Areas.Staff.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-    
 
-
-        [HttpPost]
-        public ActionResult CheckoutNow(ConfirmationViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                if (model.PaymentsList == null)
-                {
-                    model.PaymentsList = db.Payments.OrderBy(m => m.paid_no).ToList();
-                }
-                return View(model);
-            }
-
-            //Cart.AddNewOrder(model,);
-            string a = Cart.GetOrderNO();
-            //Cart.AddNewOrderDetail();
-            return RedirectToAction("Index", "Home");
-        }
-        public ActionResult Chectout()
+        [HttpGet]
+        public ActionResult Checkout()
         {
             return View(TempData["CheckoutInfo"]);
+
         }
+
+        [HttpPost]
+        public JsonResult Checkout(ConfirmationViewModel model)
+        {
+            bool result = false;
+            if (model.Order.paid_no==null)
+            {
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+            if (model.Order.order_no == null)
+            {
+                Cart.AddNewOrder(model, true, "TBP");
+                string OrderNo = Cart.GetOrderNO();
+                Cart.StaffNewOrderDetail();
+                return Json(OrderNo, JsonRequestBehavior.AllowGet);
+            }
+            else {
+                var order = db.Orders.Where(m => m.order_no == model.Order.order_no).FirstOrDefault();
+                if (order != null)
+                {
+                    order.ispaided = true;
+                    order.paid_no = model.Order.paid_no;
+                    string OrderNo = model.Order.order_no;
+                    return Json(OrderNo, JsonRequestBehavior.AllowGet);
+                }
+                else {
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+            
+            
+            }
+        }
+
+
+
+
+
 
     }
 }

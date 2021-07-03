@@ -460,7 +460,7 @@
     <Content Include="Areas\Staff\Views\StaffHome\_PartialOrderBox.cshtml" />
     <Content Include="Areas\Staff\Views\StaffHome\Index.cshtml" />
     <Content Include="Areas\Staff\Views\StaffHome\CheckoutNow.cshtml" />
-    <Content Include="Areas\Staff\Views\StaffHome\Chectout.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffHome\Checkout.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />

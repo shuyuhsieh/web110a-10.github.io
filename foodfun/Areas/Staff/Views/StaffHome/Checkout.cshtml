@@ -1,15 +1,15 @@
 ﻿@model foodfun.Models.ConfirmationViewModel
 
 @{
-    ViewBag.Title = "Chectout";
+    ViewBag.Title = "Checkout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main>
 
     <!--================ confirmation part start =================-->
-    @using (Html.BeginForm())
-    {
+
+    <form id="CheckoutOrder">
         <section class="confirmation_part section_padding">
             <div class="container">
                 <div class="row">
@@ -135,12 +135,54 @@
 
 
                     <div class="col-12">
-                        <input type="submit" value="確認付款" class="btn btn-danger btn-block" />
+                        <input type="button" id="submitCheckout" value="確認付款" class="btn btn-danger btn-block" />
                     </div>
 
                 </div>
             </div>
         </section>
-    }
+    </form>
     <!--================ confirmation part end =================-->
 </main>
+
+<script>
+
+
+
+    $("#submitCheckout").click(function () {
+
+        var data = $("#CheckoutOrder").serialize();
+        console.log(data);
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("Checkout", "StaffHome")',
+            data: data,
+            success: function (result) {
+                if (result == false) {
+                    $.alert({
+                        title: '錯誤!',
+                        content: "請輸入正確結帳資訊",
+                        type: 'red',
+                        theme: 'modern',
+                        icon: 'fa fa-exclamation'
+
+                    });
+                } else  {
+
+                    $.alert({
+                        title: '訂單成立!',
+                        content: '訂單:' + result + '結帳完成!',
+                        type: 'orange',
+                        theme: 'modern',
+                        icon: 'fa fa-check',
+                        buttons: {
+                            ok: function () { location.href = '@Url.Action("Index", "StaffHome")'; }
+                            }
+
+                    });
+                }
+            }
+        })
+
+    })
+</script>
