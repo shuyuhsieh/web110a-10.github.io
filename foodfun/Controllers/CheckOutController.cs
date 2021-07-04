@@ -115,8 +115,10 @@ namespace foodfun.Controllers
                 }
                 return View(model);
             }
+            if (model.Order.paid_no == "P01") Cart.AddNewOrder(model, false);
+            else Cart.AddNewOrder(model, true);
 
-            Cart.AddNewOrder(model,true);
+            Cart.AddNewOrder(model, true);
             string a = Cart.GetOrderNO();
 
 

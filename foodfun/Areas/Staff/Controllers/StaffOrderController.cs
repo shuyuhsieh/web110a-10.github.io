@@ -11,7 +11,7 @@ namespace foodfun.Areas.Staff.Controllers
 
         [LoginAuthorize(RoleList = "Admin/Staff")]
         // GET: Staff/StaffOrder
-        public ActionResult Here()
+        public ActionResult OnlineOrder()
         {
 
             return View(StaffOrder.GetOrderList(DateTime.Today,false));

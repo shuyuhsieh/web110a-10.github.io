@@ -7,10 +7,10 @@ using foodfun.Models;
 
 namespace foodfun.Areas.Staff.Controllers
 {
-    public class StaffHomeController : Controller
+    public class StaffProd_CheckController : Controller
     {
         GoPASTAEntities db;
-        public StaffHomeController()
+        public StaffProd_CheckController()
         {
             db = new GoPASTAEntities();
         }

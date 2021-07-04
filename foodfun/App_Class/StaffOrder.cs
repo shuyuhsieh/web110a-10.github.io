@@ -66,10 +66,15 @@ public static class StaffOrder
                         orders = orders[i],
                         orderDetails = db.OrdersDetails.Where(m => m.order_no == order_no).OrderBy(m => m.rowid).ToList(),
                         orderstatus_name = db.OrderStatus.Where(m => m.orderstatus_no == status_no).FirstOrDefault().orderstatus_name,
-                        mealservice_name = db.MealService.Where(m => m.mealservice_no == meal_no).FirstOrDefault().mealservice_name,
-                        paid_name = db.Payments.Where(m => m.paid_no == paid_no).FirstOrDefault().paid_name
+                        //mealservice_name = db.MealService.Where(m => m.mealservice_no == meal_no).FirstOrDefault().mealservice_name,
+                        
+                        //paid_name = db.Payments.Where(m => m.paid_no == paid_no).FirstOrDefault().paid_name
 
                     });
+                    if (ordersViewModels[i].orders.ispaided==true)
+                    {
+                        ordersViewModels[i].paid_name = db.Payments.Where(m => m.paid_no == paid_no).FirstOrDefault().paid_no;
+                    }
                 }
             }
 

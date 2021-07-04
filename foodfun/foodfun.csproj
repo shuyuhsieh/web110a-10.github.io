@@ -156,7 +156,7 @@
     <Compile Include="Areas\Admin\Controllers\ImageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductBackController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertysController.cs" />
-    <Compile Include="Areas\Staff\Controllers\StaffHomeController.cs" />
+    <Compile Include="Areas\Staff\Controllers\StaffProd_CheckController.cs" />
     <Compile Include="Areas\Staff\Controllers\StaffOrderController.cs" />
     <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Controllers\CheckOutController.cs" />
@@ -460,11 +460,10 @@
     <Content Include="Areas\Admin\Views\Propertys\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Propertys\Index.cshtml" />
     <Content Include="Areas\Staff\Views\web.config" />
-    <Content Include="Areas\Staff\Views\StaffHome\_PartialOrderBox.cshtml" />
-    <Content Include="Areas\Staff\Views\StaffHome\Index.cshtml" />
-    <Content Include="Areas\Staff\Views\StaffHome\CheckoutNow.cshtml" />
-    <Content Include="Areas\Staff\Views\StaffHome\Checkout.cshtml" />
-    <Content Include="Areas\Staff\Views\StaffOrder\Here.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffProd_Check\_PartialOrderBox.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffProd_Check\Index.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffProd_Check\Checkout.cshtml" />
+    <Content Include="Areas\Staff\Views\StaffOrder\OnlineOrder.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />

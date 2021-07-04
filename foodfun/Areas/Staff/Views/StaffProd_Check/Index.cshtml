@@ -29,10 +29,10 @@
                         <!--Nav Button  -->
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link btn-danger mx-2" id="nav-home-tab" href="/Staff/StaffHome/Index/HOT" role="tab" aria-controls="nav-home" aria-selected="true">熱門商品</a>
+                                <a class="nav-item nav-link btn-danger mx-2" id="nav-home-tab" href="/Staff/StaffProd_Check/Index/HOT" role="tab" aria-controls="nav-home" aria-selected="true">熱門商品</a>
                                 @foreach (var item in categorys)
                                 {
-                                    <a class="nav-item nav-link bg-danger mx-2" href="/Staff/StaffHome/Index/@item.category_no">@item.category_name</a>
+                                    <a class="nav-item nav-link bg-danger mx-2" href="/Staff/StaffProd_Check/Index/@item.category_no">@item.category_name</a>
                                 }
                             </div>
 
@@ -226,7 +226,7 @@
             function AddToCart(productId, qty, select) {
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("OrderBox","StaffHome")',
+                    url: '@Url.Action("OrderBox", "StaffProd_Check")',
                     data: { id: productId,qty:qty,prop_select:select},
                     success: function (data) {
                         /*alert('成功')*/
@@ -275,7 +275,7 @@
         console.log(data);
         $.ajax({
             type: "post",
-            url: '@Url.Action("AddOrderInfi", "StaffHome")',
+            url: '@Url.Action("AddOrderInfi", "StaffProd_Check")',
             data: data,
             success: function (result) {
                 var content = result == 0 ? '請選擇寫用餐方式!' : (result == 1 ? '請填寫桌號!' : (result == 2 ? '請填寫取餐時間!' : '請填寫外送資訊'));
@@ -297,7 +297,7 @@
                             稍後結帳: function () {
                                 $.ajax({
                                     type: "post",
-                                    url: '@Url.Action("CheckoutLater", "StaffHome")',
+                                    url: '@Url.Action("CheckoutLater", "StaffProd_Check")',
                                 }).done(function (result) {
                                     if (result != false) {
                                         $.alert({
@@ -309,7 +309,7 @@
 
                                             buttons: {
                                                 ok: function () {
-                                                    location.href = '@Url.Action("Index", "StaffHome")';
+                                                    location.href = '@Url.Action("Index", "StaffProd_Check")';
                                                 }
                                             }
                                         });
@@ -328,7 +328,7 @@
 
                             前往結帳: {
                                 btnClass: 'btn-warning',
-                                action: function () { location.href ='@Url.Action("Checkout", "StaffHome")'}
+                                action: function () { location.href ='@Url.Action("Checkout", "StaffProd_Check")'}
                             },
                         }
                     });

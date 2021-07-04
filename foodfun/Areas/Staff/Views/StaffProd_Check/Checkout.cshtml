@@ -155,7 +155,7 @@
         console.log(data);
         $.ajax({
             type: "post",
-            url: '@Url.Action("Checkout", "StaffHome")',
+            url: '@Url.Action("Checkout", "StaffProd_Check")',
             data: data,
             success: function (result) {
                 if (result == false) {
@@ -176,7 +176,7 @@
                         theme: 'modern',
                         icon: 'fa fa-check',
                         buttons: {
-                            ok: function () { location.href = '@Url.Action("Index", "StaffHome")'; }
+                            ok: function () { location.href = '@Url.Action("OnlineOrder", "StaffOrder")'; }
                             }
 
                     });
