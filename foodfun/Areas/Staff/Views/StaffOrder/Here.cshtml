@@ -1,0 +1,90 @@
+﻿@model IEnumerable<foodfun.Models.StaffOrderViewModel>
+
+@{
+    ViewBag.Title = "內用訂單";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .order_time {
+        border-radius: 50%;
+        font-size: 11px;
+        left: 15%;
+        top: 38%;
+        position: absolute;
+    }
+
+    .order_total {
+        border-radius: 50%;
+        left: 15%;
+        font-size: 11px;
+        top: 60%;
+        position: absolute;
+    }
+
+    .order-icon {
+        position: relative;
+        display: inline-block;
+    }
+</style>
+<section class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 border text-center align-items-center">
+                <h2 class="my-2">@ViewBag.Title</h2>
+            </div>
+            <div class="col-8 text-center my-4 ">
+                <table class="table  ">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.orders.order_no)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.orders.SchedulOrderTime);
+
+                            </td>
+                            <td>
+                                @(item.orders.ispaided.Value ? "已結帳" : "結帳")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.orders.total)
+                            </td>
+
+                            <td>
+                                <button data-toggle="modal" data-target="#@item.orders.order_no" class="btn btn-secondary">結帳</button>
+                                @*@Html.ActionLink("檢視明細", "Details", new { /* id=item.PrimaryKey */ })*@
+
+                            </td>
+                        </tr>
+
+
+
+
+
+                        @*<div class="my-4 ">
+
+                                <div class="order-icon " >
+                                    <i class="fas fa-clipboard fa-5x text-warning"></i>
+                                    <span class="order_time text-danger">@string.Format("{0:hh:mm}", item.orders.SchedulOrderTime)</span>
+                                    <span class="order_total text-danger">$ @string.Format("{0:G0}", item.orders.total)</span>
+                                </div>
+
+                            </div>*@
+                    }
+
+                </table>
+
+
+            </div>
+            <div class="col-4">
+
+
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
