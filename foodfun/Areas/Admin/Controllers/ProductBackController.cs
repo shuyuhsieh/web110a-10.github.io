@@ -37,7 +37,7 @@ namespace foodfun.Areas.Admin.Controllers
         {
             using (GoPASTAEntities db = new GoPASTAEntities())
             {
-
+                ViewBag.CtgryDropdownList = Backend.CtgryDropdownList();
                 Products model = new Products();
                 return View(model);
 

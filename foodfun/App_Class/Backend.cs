@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using foodfun.Models;
 
 
-
+//自動編輯商品編號
 public static class Backend
 {
     public static string CreateProductNo(string id)
@@ -34,7 +35,7 @@ public static class Backend
 
     }
 
-
+    //轉換中文
     public static string GetCodeName(string typeNo)
     {
 
@@ -57,56 +58,31 @@ public static class Backend
 
         }
 
-        //老師範例
-        //public string GetCodeName(string typeNo, string codeNo)
-        //{
-        //    string str_name = "";
-        //    var data = repoAppCode.ReadSingle(m => m.type_no == typeNo && m.mno == codeNo);
-        //    if (data != null) str_name = data.mname;
-        //    return str_name;
-        //}
-
-
     }
 
-    //老師範例
-    //public static string GetCategoryTypeList()
-    //{
-    //    using (GoPASTAEntities db = new GoPASTAEntities())
-    //    {
-    //        var data = db.Categorys.OrderBy(m => m.category_no).ToList();
-    //        if (data != null)
-    //        {
+    //下拉選單
+    public static List<SelectListItem> CtgryDropdownList()
+    {
+        using (GoPASTAEntities db = new GoPASTAEntities())
+        {
+            List<SelectListItem> cty_no = new List<SelectListItem>();
+            var datas = db.Categorys.OrderBy(m => m.category_no).ToList();
+            if (datas != null)
+            {
+                foreach (var data in datas)
+                {
+                    SelectListItem item = new SelectListItem();
+                    item.Value = data.category_no;
+                    item.Text = data.category_name;
 
-    //                for (int i = 0; i < data.Count; i++)
-    //                {
-    //                    data[i].category_no = Backend.GetCodeName("Member", data[i].category_no);
-    //                }
+                    cty_no.Add(item);
+                }
+                cty_no.First().Selected = true;
+            }
+            return cty_no;
+        }
 
-    //        }
-    //        return data;
-    //    }
-    //}
-
-
-    //public IPagedList<appadmin.Models.AppMember> GetAppMemberPageList(int page = 1, int pageSize = 10)
-    //{
-    //    var data = repoAppMember
-    //         .ReadAll()
-    //         .OrderByDescending(m => m.mno)
-    //         .ToPagedList(page, pageSize);
-    //    if (data != null)
-    //    {
-    //        using (tblAppCode appCode = new tblAppCode())
-    //        {
-    //            for (int i = 0; i < data.Count; i++)
-    //            {
-    //                data[i].code_no = appCode.GetCodeName("Member", data[i].code_no);
-    //            }
-    //        }
-    //    }
-    //    return data;
-    //}
+    }
 
 
 
