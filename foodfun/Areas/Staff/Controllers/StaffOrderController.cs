@@ -14,7 +14,7 @@ namespace foodfun.Areas.Staff.Controllers
         public ActionResult Here()
         {
 
-            return View(StaffOrder.GetOrderList("A"));
+            return View(StaffOrder.GetOrderList(DateTime.Today,false));
         }
     }
 }

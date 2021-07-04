@@ -28,37 +28,51 @@ public static class StaffOrder
     /// <summary>
     /// 取得今日未完成訂單
     /// </summary>
-    public static List<StaffOrderViewModel> GetOrderList(string mealserver_no)
+    public static List<StaffOrderViewModel> GetOrderList(DateTime date,bool isclosed)
     {
         using (GoPASTAEntities db = new GoPASTAEntities())
         {
-            DateTime dateTime = DateTime.Today.AddDays(1);
-            var order = db.Orders.Where(m => m.isclosed == false)
-                                 .Where(m => m.SchedulOrderTime >= DateTime.Today && m.SchedulOrderTime < dateTime)
-                                 .Where(m => m.mealservice_no == mealserver_no)
-                                 .OrderBy(m => m.order_no).ToList();
+            List<Orders> orders = new List<Orders>();
+            DateTime todayEnd = DateTime.Today.AddDays(1);
 
-            int num = order.Count();
+            if (date.Date == DateTime.Today.Date)
+            {
+                orders = db.Orders.Where(m => m.isclosed == isclosed)
+                    .Where(m => m.SchedulOrderTime >= DateTime.Today && m.SchedulOrderTime < todayEnd)
+                    .OrderBy(m => m.SchedulOrderTime).ToList();
+            }
+            else if (date.Date > DateTime.Today.Date)
+            {
+                orders = db.Orders.Where(m => m.isclosed == isclosed)
+                    .Where(m => m.SchedulOrderTime >= todayEnd)
+                    .OrderBy(m => m.SchedulOrderTime).ToList();
+            }
+
 
             List<StaffOrderViewModel> ordersViewModels = new List<StaffOrderViewModel>();
-            for (int i = 0; i < num; i++)
+
+            if (orders != null)
             {
-                string status_no = order[i].orderstatus_no;
-                string meal_no = order[i].mealservice_no;
-                string order_no = order[i].order_no;
-                string paid_no = order[i].paid_no;
-
-                ordersViewModels.Add(new StaffOrderViewModel()
+                int num = orders.Count();
+                for (int i = 0; i < num; i++)
                 {
-                    orders = order[i],
-                    
-                    orderDetails = db.OrdersDetails.Where(m => m.order_no == order_no).OrderBy(m => m.rowid).ToList(),
-                    orderstatus_name = db.OrderStatus.Where(m => m.orderstatus_no == status_no).FirstOrDefault().orderstatus_name,
-                    mealservice_name = db.MealService.Where(m => m.mealservice_no == meal_no).FirstOrDefault().mealservice_name,
-                    paid_name = db.Payments.Where(m => m.paid_no == paid_no ).FirstOrDefault().paid_name
+                    string status_no = orders[i].orderstatus_no;
+                    string meal_no = orders[i].mealservice_no;
+                    string order_no = orders[i].order_no;
+                    string paid_no = orders[i].paid_no;
 
-                });
+                    ordersViewModels.Add(new StaffOrderViewModel()
+                    {
+                        orders = orders[i],
+                        orderDetails = db.OrdersDetails.Where(m => m.order_no == order_no).OrderBy(m => m.rowid).ToList(),
+                        orderstatus_name = db.OrderStatus.Where(m => m.orderstatus_no == status_no).FirstOrDefault().orderstatus_name,
+                        mealservice_name = db.MealService.Where(m => m.mealservice_no == meal_no).FirstOrDefault().mealservice_name,
+                        paid_name = db.Payments.Where(m => m.paid_no == paid_no).FirstOrDefault().paid_name
+
+                    });
+                }
             }
+
             return ordersViewModels;
         }
     }
