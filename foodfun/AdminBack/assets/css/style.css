@@ -2508,3 +2508,11 @@ footer.site-footer {
     right: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/*=========== file-upload===========*/
+ .file-upload .file-upload-image {
+    max-height: 500px !important;
+    max-width: 400px !important;
+}
+/*=========== file-upload end ===========*/

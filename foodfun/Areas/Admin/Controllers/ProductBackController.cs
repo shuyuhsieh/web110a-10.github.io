@@ -12,15 +12,24 @@ namespace foodfun.Areas.Admin.Controllers
 {
     public class ProductBackController : Controller
     {
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        GoPASTAEntities db = new GoPASTAEntities();
+        public ActionResult Index()
         {
             // return View(repo_product.ReadAll().OrderBy(m => m.mno));
 
-            using (GoPASTAEntities db = new GoPASTAEntities())
-            {
-                return View(db.Products.OrderBy(m => m.product_no).ToPagedList(page, pageSize));
+          var product=db.Products.OrderBy(m => m.product_no).ToList();
 
+            var model = new List<ProductBackViewModel>();
+
+            for (int i = 0; i < product.Count; i++)
+            {
+                model.Add(new ProductBackViewModel()
+                {
+                    products=product[i],
+                    category_name = Backend.GetCodeName(product[i].category_no)
+                });
             }
+                return View(model);
         }
 
         [HttpGet]
@@ -28,7 +37,7 @@ namespace foodfun.Areas.Admin.Controllers
         {
             using (GoPASTAEntities db = new GoPASTAEntities())
             {
-
+                ViewBag.CtgryDropdownList = Backend.CtgryDropdownList();
                 Products model = new Products();
                 return View(model);
 
@@ -117,8 +126,7 @@ namespace foodfun.Areas.Admin.Controllers
                 var model = db.Products.Where(m => m.product_no == product_no).FirstOrDefault();
 
                 ImageService.ReturnAction("", "ProductBack", "Index");               
-                ImageService.ImageTitle = string.Format("{0} {1} 圖片上傳", model.product_no, model.product_name);
-                ImageService.ImageTitle = string.Format("圖片上傳");
+                ImageService.ImageTitle = string.Format("{0}  圖片上傳", model.product_name);
                 ImageService.ImageFolder = "~/img/product";
                 ImageService.ImageSubFolder = model.category_no;
                 ImageService.ImageName = model.product_no;

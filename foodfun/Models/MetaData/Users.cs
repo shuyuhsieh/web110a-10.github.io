@@ -36,7 +36,8 @@ namespace foodfun.Models
             public string id { get; set; }
 
             [Display(Name = "出生日期")]
-            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "yyyy/MM/dd")]
+            //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "yyyy/MM/dd")]
+            [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
             public Nullable<System.DateTime> birthday { get; set; }
 
             [Required]
