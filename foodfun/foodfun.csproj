@@ -632,6 +632,10 @@
     <Content Include="Areas\Admin\Views\MemberBack\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MemberBack\Create.cshtml" />
     <Content Include="Areas\Admin\Views\MemberBack\Edit.cshtml" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />
