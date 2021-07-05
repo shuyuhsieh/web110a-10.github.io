@@ -153,6 +153,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategorysController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MemberBackController.cs" />
     <Compile Include="Areas\Admin\Controllers\PaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductBackController.cs" />
     <Compile Include="Areas\Admin\Controllers\PropertysController.cs" />
@@ -628,6 +629,13 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Areas\Admin\Views\ProductBack\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MemberBack\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MemberBack\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MemberBack\Edit.cshtml" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\datepicker-zh-TW.js" />
     <Content Include="Scripts\datepicker.js" />
@@ -1045,6 +1053,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\AdminHome\" />
+    <Folder Include="Areas\Admin\Views\Users\" />
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\Views\Shared\" />
     <Folder Include="Views\AdminCart\" />
