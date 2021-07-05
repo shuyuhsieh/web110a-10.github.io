@@ -29,18 +29,20 @@ namespace foodfun.Models
             [Display(Name = "稅額")]
             public Nullable<decimal> taxs { get; set; }
 
+
+            [DisplayFormat(DataFormatString =("{0:C0}"))]
             [Display(Name = "總計")]
             public Nullable<decimal> total { get; set; }
 
             [Display(Name = "訂單狀態編碼")]
-
-
             public string orderstatus_no { get; set; }
 
             [Required]
             [Display(Name = "用餐方式編碼")]
             public string mealservice_no { get; set; }
 
+
+             [DisplayFormat(DataFormatString =("{0:yyyy/MM/dd HH:mm}"))]
             [Display(Name = "預約取餐時間")]
             public Nullable<System.DateTime> SchedulOrderTime { get; set; }
 
