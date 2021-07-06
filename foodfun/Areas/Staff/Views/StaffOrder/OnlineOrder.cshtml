@@ -37,30 +37,34 @@
                 <table class="table  ">
                     @foreach (var item in Model)
                     {
-                        <tr>
-                    
+                        <tr class="this-order" id="@item.orders.order_no">
+
                             <td>
 
                                 <h5>@Html.DisplayFor(modelItem => item.mealservice_name)</h5>
                                 @Html.DisplayFor(modelItem => item.orders.order_no)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.orders.SchedulOrderTime, "ShortDateTime")
-
+                                @*@item.orders.SchedulOrderTime.ToString.format{0:HH:mm}*@
+                                @*@Html.DisplayFor(modelItem => item.orders.SchedulOrderTime, "ShortDateTime")*@
+                                @Html.ValueFor(modelItem => item.orders.SchedulOrderTime, "{0:HH:mm}")
                             </td>
-                            <td>
-                                @(item.orders.ispaided.Value ? "已結帳" : "結帳")
-                            </td>
-
                             <td>
                                 @Html.DisplayFor(modelItem => item.orders.total)
                             </td>
-
                             <td>
-                                <button data-toggle="modal" data-target="#@item.orders.order_no" class="btn btn-secondary">結帳</button>
-                                @*@Html.ActionLink("檢視明細", "Details", new { /* id=item.PrimaryKey */ })*@
-
+                                <input type="button" value=@(item.orders.ispaided.Value ? "已付款" : " 結帳去 ") class="btn btn-danger ispaided" onclick="location.href = '/Staff/StaffProd_Check/OnlineCheckout/?id=@item.orders.order_no'">
+                                @*@(item.orders.ispaided.Value ? "已付款" : " 結帳"&ensp)*@
                             </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.orderstatus_name)
+                            </td>
+                            <td>
+                                <input type="button" value=@item.change_status class="btn btn-warning ">
+                            </td>
+
+
+
                         </tr>
                     }
 
@@ -98,4 +102,39 @@
         </div>
     </div>
 </section>
+
+<script>
+    $('.this-order').css("cursor", "pointer");
+
+
+    $.each($('.ispaided'), function (index) {
+
+        if ($(this).val() == "已付款") {
+            $(this).attr('disabled', 'disabled');
+        }
+    })
+    @*$('.ispaided').on('click', function () {
+        var id = $(this).parents('tr').attr('id');
+        console.log(id);
+        window.location = '@Url.Action("OnlineCheckout", "StaffProd_Check",)';
+
+    });*@
+
+
+     function ShowThisOrder(productId) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("OrderBox", "StaffProd_Check")',
+                    data: { id: productId,qty:qty,prop_select:select},
+                    success: function (data) {
+                        /*alert('成功')*/
+                        $("#orderDetail").html(data);
+                    },
+                    error: function () {
+                        alert('失敗')
+                    }
+                })
+            }
+
+</script>
 

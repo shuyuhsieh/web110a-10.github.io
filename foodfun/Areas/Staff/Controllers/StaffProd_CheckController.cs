@@ -127,6 +127,45 @@ namespace foodfun.Areas.Staff.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult OnlineCheckout(string id)
+        {
+            ConfirmationViewModel orderInfoView = new ConfirmationViewModel()
+            {
+                Order = new Orders(),
+                PaymentsList = db.Payments.OrderBy(m => m.paid_no).ToList()
+            };
+            orderInfoView.Order = db.Orders.Where(m => m.order_no == id).FirstOrDefault();
+            var OnlineCart = new List<Carts>();
+            var OrderDetailList = db.OrdersDetails.Where(m => m.order_no == id).ToList();
+
+            if (OrderDetailList != null)
+            {
+                for (int i = 0; i < OrderDetailList.Count(); i++)
+                {
+                    var OrderDetail = new Carts();
+                    OrderDetail.product_no = OrderDetailList[i].product_no;
+                    OrderDetail.Property_select = OrderDetailList[i].Property_select;
+                    OrderDetail.qty = OrderDetailList[i].qty;
+                    OrderDetail.each_item_amount = OrderDetailList[i].each_item_amount;
+                    OnlineCart.Add(OrderDetail);
+                }
+            }
+            orderInfoView.Cart = OnlineCart;
+
+
+
+            var mealservice = db.MealService.Where(m => m.mealservice_no == orderInfoView.Order.mealservice_no).FirstOrDefault();
+            orderInfoView.mealservice_name = mealservice.mealservice_name;
+
+            TempData["CheckoutInfo"] = orderInfoView;
+            return RedirectToAction("Checkout");
+
+        }
+
+
+
+
         public ActionResult OrderBox(string id, int qty, string prop_select)
         {
             var currentCart = CartTemp.GetCurrentCart();
@@ -169,7 +208,8 @@ namespace foodfun.Areas.Staff.Controllers
         public JsonResult Checkout(ConfirmationViewModel model)
         {
             bool result = false;
-            if (model.Order.paid_no==null)
+          
+            if (model.Order.paid_no == null)
             {
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
@@ -181,21 +221,31 @@ namespace foodfun.Areas.Staff.Controllers
                 Cart.StaffNewOrderDetail();
                 return Json(OrderNo, JsonRequestBehavior.AllowGet);
             }
-            else {
+            else
+            {
                 var order = db.Orders.Where(m => m.order_no == model.Order.order_no).FirstOrDefault();
                 if (order != null)
                 {
                     order.ispaided = true;
                     order.paid_no = model.Order.paid_no;
+                    if (order.orderstatus_no=="ALD")
+                    {
+                        order.isclosed = true;
+                    }
+
+                    db.SaveChanges();
                     string OrderNo = model.Order.order_no;
+
                     return Json(OrderNo, JsonRequestBehavior.AllowGet);
                 }
-                else {
+                else
+                {
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
-            
-            
+
+
             }
+            //}
         }
 
 

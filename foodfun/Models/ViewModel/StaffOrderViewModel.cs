@@ -14,11 +14,13 @@ namespace foodfun.Models
         [Display(Name = "訂單狀態")]
         public string orderstatus_name { get; set; }
 
-        [Display(Name = "用餐方式")]
+        [Display(Name = "訂單")]
         public string mealservice_name { get; set; }
 
         [Display(Name = "付款方式")]
         public string paid_name { get; set; }
+
+        public string change_status { get; set; }
 
 
 
