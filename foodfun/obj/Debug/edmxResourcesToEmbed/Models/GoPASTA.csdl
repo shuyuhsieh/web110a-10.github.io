@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GoPASTAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Carts">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cart_lotno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="product_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Property_select" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="qty" Type="Int32" />
+    <Property Name="create_time" Type="DateTime" Precision="3" />
+    <Property Name="each_item_amount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Categorys">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="parentid" Type="Int32" />
+    <Property Name="category_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="MealService">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="mealservice_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mealservice_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OrdersDetails">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="product_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Property_select" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="each_item_amount" Type="Int32" />
+    <Property Name="qty" Type="Int32" />
+    <Property Name="discount_rate" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="OrderStatus">
+    <Key>
+      <PropertyRef Name="orderstatus_no" />
+    </Key>
+    <Property Name="orderstatus_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="orderstatus_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="paid_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="paid_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ProductsProperty">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="product_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Property_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Propertys">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="property_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="property_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="add_price" Type="Int32" />
+    <Property Name="property_value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="role_no" />
+    </Key>
+    <Property Name="role_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="role_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="account_name" />
+    </Key>
+    <Property Name="mno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="account_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="birthday" Type="DateTime" Precision="3" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="role_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="varify_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="isvarify" Type="Boolean" />
+    <Property Name="isvalidate" Type="Boolean" />
+  </EntityType>
+  <EntityContainer Name="GoPASTAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Carts" EntityType="Self.Carts" />
+    <EntitySet Name="Categorys" EntityType="Self.Categorys" />
+    <EntitySet Name="MealService" EntityType="Self.MealService" />
+    <EntitySet Name="OrdersDetails" EntityType="Self.OrdersDetails" />
+    <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" />
+    <EntitySet Name="ProductsProperty" EntityType="Self.ProductsProperty" />
+    <EntitySet Name="Propertys" EntityType="Self.Propertys" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Orders" EntityType="GoPASTAModel.Orders" />
+    <EntitySet Name="Products" EntityType="GoPASTAModel.Products" />
+    <EntitySet Name="Company" EntityType="GoPASTAModel.Company" />
+    <EntitySet Name="Concepts" EntityType="GoPASTAModel.Concepts" />
+    <EntitySet Name="Profiles" EntityType="GoPASTAModel.Profiles" />
+    <EntitySet Name="ProgramList" EntityType="GoPASTAModel.ProgramList" />
+  </EntityContainer>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="order_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="order_date" Type="DateTime" Precision="3" />
+    <Property Name="mno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="discount_rate" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="taxs" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="total" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="orderstatus_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="mealservice_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SchedulOrderTime" Type="DateTime" Precision="3" />
+    <Property Name="table_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="paid_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="receive_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="receive_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="receive_address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="isclosed" Type="Boolean" />
+    <Property Name="ispaided" Type="Boolean" />
+    <Property Name="order_guid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="cancelorder" Type="Boolean" />
+    <Property Name="cancelreason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="product_no" />
+    </Key>
+    <Property Name="product_no" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="product_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="product_spec" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="category_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="price_avgcost" Type="Int32" />
+    <Property Name="price_sale" Type="Int32" />
+    <Property Name="discount_price" Type="Int32" />
+    <Property Name="stock_qty" Type="Int32" />
+    <Property Name="image_path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="browse_count" Type="Int32" />
+    <Property Name="istop" Type="Boolean" />
+    <Property Name="issale" Type="Boolean" />
+    <Property Name="ishot" Type="Boolean" />
+    <Property Name="remark" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="company_id" Type="Int32" />
+    <Property Name="brandname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="tel" Type="Int32" />
+    <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="opentime" Type="Time" Precision="0" />
+    <Property Name="closetime" Type="Time" Precision="0" />
+    <Property Name="public_holiday" Type="DateTime" Precision="0" />
+    <Property Name="logoimage_path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="indeximage_path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Concepts">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" />
+    <Property Name="corevalue_title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="corevalue_descpt" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="corevalue_path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Profiles">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="company_profile" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="profileimage_path" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ProgramList">
+    <Key>
+      <PropertyRef Name="rowid" />
+    </Key>
+    <Property Name="rowid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="parentid" Type="Int32" />
+    <Property Name="filter_role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="pro_no" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="pro_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="controller_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="action_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
